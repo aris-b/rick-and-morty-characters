@@ -1,0 +1,15 @@
+@use 'sass:color';
+@import "~sass-rem";
+@import 'styles/colors.scss';
+
+.CharactersListPage {
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background-color: color.scale($color-3, $lightness: 0%);
+  margin-bottom: rem(100px);
+}

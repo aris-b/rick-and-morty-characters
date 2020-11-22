@@ -1,0 +1,17 @@
+@use 'sass:color';
+@import "~sass-rem";
+@import 'styles/colors.scss';
+
+.CharacterList {
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  padding: rem(50px);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+
+  background-color: color.scale($color-3, $lightness: 0%);
+}

@@ -1,0 +1,9 @@
+@use "sass:color";
+@import '~sass-rem';
+
+$color-1: #ffffff;
+$color-2: #a2de96;
+$color-3: #3ca59d;
+$color-4: #5a3d55;
+$color-5: #e79c2a;
+$shadow-color: color.scale(#000000, $lightness: 30%);

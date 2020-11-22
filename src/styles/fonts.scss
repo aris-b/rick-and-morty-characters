@@ -1,0 +1,9 @@
+@use "sass:color";
+@import '~sass-rem';
+
+$font-1: 'Comfortaa';
+$font-2: 'Roboto';
+$font-fallback: sans-serif;
+
+$font-family-1: $font-1, $font-fallback;
+$font-family-2: $font-2, $font-fallback;

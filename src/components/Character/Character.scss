@@ -1,0 +1,93 @@
+@use "sass:color";
+@import '~sass-rem';
+@import 'styles/colors.scss';
+@import 'styles/fonts.scss';
+@import 'styles/mixins.scss';
+
+.Character {
+  width: rem(300px);
+  height: rem(510px);
+  margin: rem(10px);
+  background-color: color.scale($color-2, $lightness: 60%);
+  box-shadow: rem(-10px 0px 13px -7px) $shadow-color, rem(10px 0px 13px -7px) $shadow-color, rem(5px 5px 15px 5px) rgba(0,0,0,0);
+  border: rem(1px) solid $color-4;
+  border-bottom: rem(4px) solid $color-4;
+
+  .Character_image {
+    display: block;
+    width: 100%;
+  }
+
+  .Character_property {
+    display: flex;
+    justify-content: center;
+    padding: rem(2px 0);
+  }
+
+  .Character_name {
+    background-color: $color-4;
+    color: $color-1;
+    padding: rem(6px 0);
+  }
+
+  .Character_nameText {
+    font-size: rem(26px);
+    @include truncate();
+    width: rem(260px);
+    font-family: $font-family-1;
+    font-weight: bold;
+  }
+
+  .Character_text {
+    @include truncate();
+    width: rem(250px);
+    font-family: $font-family-2;
+    font-size: rem(17px);
+  }
+
+  .Character_genderAndSpecies {
+    margin-bottom: rem(10px);
+    background-color: color.scale($color-2, $lightness: 90%);
+    margin-bottom: rem(20px);
+  }
+
+  .Character_statusValue {
+    display: inline-block;
+    font-weight: bold;
+    text-transform: capitalize;
+    padding: rem(2px 4px);
+    color: $color-1;
+  }
+
+  .Character_statusValue___dead {
+    background-color: $color-4;
+  }
+
+  .Character_statusValue___alive {
+    background-color: $color-3;
+  }
+
+  .Character_statusValue___unknown {
+    background-color: $color-5;
+  }
+
+  .Character_propertiesGrid {
+    width: 100%;
+    background-color: color.scale($color-2, $lightness: 90%);
+    padding: rem(0 10px);
+  }
+
+  .Character_propertiesGridColTitle {
+    text-align: right;
+    font-weight: bold;
+  }
+
+  .Character_propertiesGridColValue {
+    text-align: left;
+  }
+
+  .Character_propertiesGridColValueText {
+    @include truncate();
+    max-width: rem(180px);
+  }
+}
