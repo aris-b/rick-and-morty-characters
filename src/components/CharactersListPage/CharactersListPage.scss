@@ -1,15 +1,87 @@
 @use 'sass:color';
 @import "~sass-rem";
 @import 'styles/colors.scss';
+@import 'styles/fonts.scss';
 
 .CharactersListPage {
-  height: 100%;
+  // height: 100%;
+  min-height: 100%;
   width: 100%;
   max-width: 100%;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  background-color: color.scale($color-3, $lightness: 0%);
-  margin-bottom: rem(100px);
+  // flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  // background-color: color.scale($color-3, $lightness: 0%);
+  // margin-bottom: rem(100px);
+
+  .CharactersListPage_loading {
+    // height: 100%;
+    // margin: auto auto;
+    color: $color-1;
+    font-weight: bold;
+    font-size: rem(32px);
+    font-family: $font-family-1;
+  }
+
+  .CharactersListPage_container {
+    width: 100%;
+    // padding: rem(50px 0);
+    // display: flex;
+    // flex-direction: row;
+    // flex-wrap: wrap;
+    // justify-content: center;
+    // align-items: center;
+    background-color: color.scale($color-3, $lightness: 0%);
+    // margin-bottom: rem(200px);
+    padding-bottom: rem(200px);
+  }
+
+  .CharactersListPage_pagination {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: $color-4;
+    color: $color-1;
+    padding: rem(16px 0);
+  }
+
+  .CharactersListPage_pagination li {
+    display: inline-block;
+    margin: rem(0 2px);
+    font-size: rem(22px);
+  }
+
+  .CharactersListPage_paginationActive a,
+  .CharactersListPage_paginationDisabled a {
+    &:hover {
+      background-color: transparent !important;
+    }
+  }
+
+  .CharactersListPage_pagination a {
+    padding: rem(6px 6px);
+    cursor: pointer;
+    &:hover {
+      background-color: $color-5;
+    }
+  }
+
+  .CharactersListPage_paginationActive a {
+    cursor: default;
+  }
+
+  .CharactersListPage_paginationActive {
+    font-weight: bold;
+  }
+
+  .CharactersListPage_paginationActive a {
+    font-weight: bold;
+    border-bottom: rem(3px) solid $color-5;
+  }
+
+  .CharactersListPage_paginationDisabled a {
+    cursor: default;
+  }
 }

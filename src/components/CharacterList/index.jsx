@@ -9,23 +9,13 @@ class CharacterList extends React.Component {
     this.state = {};
   }
 
-  componentDidMount() {
-    const { loadCharacters } = this.props;
-    loadCharacters();
-  }
-
   render() {
-    const { isLoading, characters, meta } = this.props;
+    const { characters } = this.props;
     // const {} = this.state;
     // const {} = this;
 
     return (
       <div className="CharacterList">
-        {isLoading && (
-          <div>
-            Loading...
-          </div>
-        )}
         {characters.map((character) => (
           <Character
             key={character.id}
@@ -40,14 +30,12 @@ class CharacterList extends React.Component {
             image={character.image}
           />
         ))}
-        {meta.count}
       </div>
     );
   }
 }
 
 CharacterList.propTypes = {
-  isLoading: PropTypes.bool,
   characters: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
@@ -63,15 +51,8 @@ CharacterList.propTypes = {
     }),
     image: PropTypes.string,
   })).isRequired,
-  meta: PropTypes.shape({
-    count: PropTypes.number,
-    pages: PropTypes.number,
-  }).isRequired,
-  loadCharacters: PropTypes.func.isRequired,
 };
 
-CharacterList.defaultProps = {
-  isLoading: false,
-};
+CharacterList.defaultProps = {};
 
 export default CharacterList;

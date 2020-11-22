@@ -1,11 +1,11 @@
 import React from 'react';
-import CharacterListContainer from 'containers/CharacterList';
+import CharacterListPageContainer from 'containers/CharacterListPage';
 import './App.scss';
 
 function App() {
   return (
     <div className="App">
-      <CharacterListContainer />
+      <CharacterListPageContainer />
     </div>
   );
 }
