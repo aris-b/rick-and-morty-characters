@@ -7,18 +7,28 @@ import './CharactersListPage.scss';
 class CharactersListPage extends React.Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      pageIdx: 0,
+    };
   }
 
   componentDidMount() {
     const { loadCharacters } = this.props;
-    loadCharacters();
+    const { pageIdx } = this.state;
+    loadCharacters({ page: pageIdx + 1 });
+  }
+
+  onPageChange = (data) => {
+    const { loadCharacters } = this.props;
+    const { selected } = data;
+    this.setState({ pageIdx: selected });
+    loadCharacters({ page: selected + 1 });
   }
 
   render() {
     const { isLoading, characters, meta } = this.props;
-    // const {} = this.state;
-    // const {} = this;
+    const { pageIdx } = this.state;
+    const { onPageChange } = this;
 
     return (
       <div className="CharactersListPage">
@@ -34,7 +44,8 @@ class CharactersListPage extends React.Component {
 
             <ReactPaginate
               pageCount={meta.count}
-              // onPageChange={}
+              forcePage={pageIdx}
+              onPageChange={onPageChange}
               previousLabel="<"
               nextLabel=">"
               containerClassName="CharactersListPage_pagination"
