@@ -84,4 +84,63 @@
   .CharactersListPage_paginationDisabled a {
     cursor: default;
   }
+
+  .CharactersListPage_filter {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: rem(30px 20px);
+    background-color: $color-4;
+  }
+
+  .CharactersListPage_filterFieldContainer {
+    width: rem(450px);
+    min-width: rem(200px);
+    margin: rem(10px);
+  }
+
+  .CharactersListPage_filterFieldTitle {
+    color: $color-1;
+    font-weight: bold;
+    font-size: rem(16px);
+    margin-bottom: rem(10px);
+  }
+
+  .CharactersListPage_filterField {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    border-radius: rem(4px);
+    border: rem(1px) solid $color-1;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    font-size: rem(16px);
+    margin: rem(0 20px);
+  }
+
+  .CharactersListPage_filterField___select {}
+
+  .CharactersListPage_filterField___select::-ms-expand {
+    display: none;
+  }
+  .CharactersListPage_filterField___select {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 0.5em 2em 0.5em 0.5em;
+    border: 1px solid #eee;
+    font: inherit;
+    line-height: inherit;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+    background-position: right 15px top 1em, right 10px top 1em;
+    background-size: 5px 5px, 5px 5px;
+  }
 }

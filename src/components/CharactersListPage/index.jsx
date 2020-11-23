@@ -53,6 +53,38 @@ class CharactersListPage extends React.Component {
               activeClassName="CharactersListPage_paginationActive"
               disabledClassName="CharactersListPage_paginationDisabled"
             />
+
+            <div className="CharactersListPage_filter">
+              <label
+                className="CharactersListPage_filterFieldContainer"
+                htmlFor="character-list-filter-name"
+              >
+                <div className="CharactersListPage_filterFieldTitle">Name</div>
+                <input
+                  className="CharactersListPage_filterField"
+                  name="character-list-filter-name"
+                  id="character-list-filter-name"
+                  type="text"
+                  placeholder="Start typing name..."
+                />
+              </label>
+              <label
+                className="CharactersListPage_filterFieldContainer"
+                htmlFor="character-list-filter-gender"
+              >
+                <div className="CharactersListPage_filterFieldTitle">Gender</div>
+                <select
+                  className="CharactersListPage_filterField CharactersListPage_filterField___select"
+                  name="character-list-filter-gender"
+                  id="character-list-filter-gender"
+                >
+                  <option value="any">Any</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </label>
+            </div>
           </div>
         )}
 
