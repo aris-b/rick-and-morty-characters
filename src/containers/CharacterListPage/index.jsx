@@ -6,6 +6,9 @@ const CharacterListPageContainer = connect(
     const { characters } = state;
     return {
       isLoading: characters.isLoading,
+      pageIdx: characters.pageIdx,
+      filterName: characters.filterName,
+      filterGender: characters.filterGender,
       characters: characters.items,
       meta: characters.meta,
     };

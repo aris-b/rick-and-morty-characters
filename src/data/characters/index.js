@@ -1,6 +1,14 @@
 import client from 'data/graphql';
 import getCharactersQuery from './graphql';
 
+export const ERROR_TYPES = {
+  NO_RESULTS: 'NO_RESULTS',
+};
+
+const ERRORS_BY_RESPONSE_MSG = {
+  '404: Not Found': ERROR_TYPES.NO_RESULTS,
+};
+
 const characters = {
   state: {
     isLoading: false,
@@ -9,6 +17,10 @@ const characters = {
       count: 0,
       pages: 1,
     },
+    pageIdx: 0,
+    filterName: '',
+    filterGender: 'any',
+    error: null,
   },
 
   reducers: {
@@ -34,35 +46,120 @@ const characters = {
         meta,
       };
     },
+    updatePageIdx(state, payload) {
+      const { pageIdx } = payload;
+      return {
+        ...state,
+        pageIdx,
+      };
+    },
+    updateFilterName(state, payload) {
+      const { filterName } = payload;
+      return {
+        ...state,
+        filterName,
+      };
+    },
+    updateFilterGender(state, payload) {
+      const { filterGender } = payload;
+      return {
+        ...state,
+        filterGender,
+      };
+    },
+    updateError(state, payload) {
+      const { error } = payload;
+      console.log('error:', error);
+      let errorType = error;
+      if (error && error.graphQLErrors) {
+        console.log('error.graphQLErrors:', error.graphQLErrors);
+        errorType = ERRORS_BY_RESPONSE_MSG[error.graphQLErrors[0].message];
+      }
+      return {
+        ...state,
+        error: errorType,
+      };
+    },
   },
 
   effects: (dispatch) => ({
     // handle state changes with impure functions.
     // use async/await for async actions
-    // eslint-disable-next-line no-unused-vars
     async loadCharacters(payload, rootState) {
-      const { page = 1, filter = null } = payload || {};
+      console.log('loadCharacters:', payload);
+      const { pageIdx, filterName, filterGender } = payload || {};
+      const {
+        pageIdx: pageIdxCurrent,
+        filterName: filterNameCurrent,
+        filterGender: filterGenderCurrent,
+      } = rootState.characters;
 
       const request = client.query({
-        query: getCharactersQuery({ page, filter }),
+        query: getCharactersQuery({
+          page: ((pageIdx !== undefined) || pageIdxCurrent) + 1,
+          filter: {
+            name: filterName || filterNameCurrent,
+            gender: filterGender || filterGenderCurrent,
+          },
+        }),
       });
 
       dispatch.characters.updateIsLoading({
         isLoading: true,
       });
+      dispatch.characters.updateError({
+        error: null,
+      });
 
-      const response = await request;
-      console.log('response:', response);
+      let response;
+      try {
+        response = await request;
 
-      dispatch.characters.updateItems({
-        items: response.data.characters.results,
-      });
-      dispatch.characters.updateMeta({
-        meta: response.data.characters.info,
-      });
-      dispatch.characters.updateIsLoading({
-        isLoading: false,
-      });
+        dispatch.characters.updateItems({
+          items: response.data.characters.results,
+        });
+        dispatch.characters.updateMeta({
+          meta: response.data.characters.info,
+        });
+      } catch (error) {
+        if (error.graphQLErrors) {
+          const errorType = ERRORS_BY_RESPONSE_MSG[error.graphQLErrors[0].message];
+          if (errorType === ERROR_TYPES.NO_RESULTS) {
+            dispatch.characters.updateItems({
+              items: [],
+            });
+            dispatch.characters.updateMeta({
+              meta: {
+                count: 0,
+                pages: 1,
+              },
+            });
+          }
+        }
+
+        dispatch.characters.updateError({
+          error,
+        });
+      } finally {
+        if (pageIdx !== undefined) {
+          dispatch.characters.updatePageIdx({
+            pageIdx,
+          });
+        }
+        if (filterName !== undefined) {
+          dispatch.characters.updateFilterName({
+            filterName,
+          });
+        }
+        if (filterGender !== undefined) {
+          dispatch.characters.updateFilterGender({
+            filterGender,
+          });
+        }
+        dispatch.characters.updateIsLoading({
+          isLoading: false,
+        });
+      }
     },
   }),
 };

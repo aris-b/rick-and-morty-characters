@@ -2,33 +2,41 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CharactersList from 'components/CharacterList';
 import ReactPaginate from 'react-paginate';
+import CharacterListFilter from 'components/CharactersListFilter';
 import './CharactersListPage.scss';
 
 class CharactersListPage extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      pageIdx: 0,
-    };
-  }
-
   componentDidMount() {
     const { loadCharacters } = this.props;
-    const { pageIdx } = this.state;
-    loadCharacters({ page: pageIdx + 1 });
+    const { pageIdx } = this.props;
+    loadCharacters({ pageIdx });
   }
 
   onPageChange = (data) => {
     const { loadCharacters } = this.props;
     const { selected } = data;
-    this.setState({ pageIdx: selected });
-    loadCharacters({ page: selected + 1 });
+    loadCharacters({ pageIdx: selected + 1 });
+  }
+
+  onFilterNameChange = (data) => {
+    const { value } = data.target;
+    const { loadCharacters } = this.props;
+    // this.setState({ filterName: value });
+    loadCharacters({ filterName: value });
+  }
+
+  onFilterGenderChange = (data) => {
+    const { value } = data.target;
+    const { loadCharacters } = this.props;
+    // this.setState({ filterGender: value });
+    loadCharacters({ filterGender: value });
   }
 
   render() {
-    const { isLoading, characters, meta } = this.props;
-    const { pageIdx } = this.state;
-    const { onPageChange } = this;
+    const {
+      isLoading, characters, meta, pageIdx, filterName, filterGender,
+    } = this.props;
+    const { onPageChange, onFilterNameChange, onFilterGenderChange } = this;
 
     return (
       <div className="CharactersListPage">
@@ -42,49 +50,30 @@ class CharactersListPage extends React.Component {
           <div className="CharactersListPage_container">
             <CharactersList characters={characters} />
 
-            <ReactPaginate
-              pageCount={meta.count}
-              forcePage={pageIdx}
-              onPageChange={onPageChange}
-              previousLabel="<"
-              nextLabel=">"
-              containerClassName="CharactersListPage_pagination"
-              subContainerClassName="CharactersListPage_paginationPages"
-              activeClassName="CharactersListPage_paginationActive"
-              disabledClassName="CharactersListPage_paginationDisabled"
-            />
+            {meta.count ? (
+              <ReactPaginate
+                pageCount={meta.count}
+                forcePage={pageIdx}
+                onPageChange={onPageChange}
+                previousLabel="<"
+                nextLabel=">"
+                containerClassName="CharactersListPage_pagination"
+                subContainerClassName="CharactersListPage_paginationPages"
+                activeClassName="CharactersListPage_paginationActive"
+                disabledClassName="CharactersListPage_paginationDisabled"
+              />
+            ) : (
+              <div className="CharactersListPage_noResults">
+                No result matching the criteria.
+              </div>
+            )}
 
-            <div className="CharactersListPage_filter">
-              <label
-                className="CharactersListPage_filterFieldContainer"
-                htmlFor="character-list-filter-name"
-              >
-                <div className="CharactersListPage_filterFieldTitle">Name</div>
-                <input
-                  className="CharactersListPage_filterField"
-                  name="character-list-filter-name"
-                  id="character-list-filter-name"
-                  type="text"
-                  placeholder="Start typing name..."
-                />
-              </label>
-              <label
-                className="CharactersListPage_filterFieldContainer"
-                htmlFor="character-list-filter-gender"
-              >
-                <div className="CharactersListPage_filterFieldTitle">Gender</div>
-                <select
-                  className="CharactersListPage_filterField CharactersListPage_filterField___select"
-                  name="character-list-filter-gender"
-                  id="character-list-filter-gender"
-                >
-                  <option value="any">Any</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-                </select>
-              </label>
-            </div>
+            <CharacterListFilter
+              filterName={filterName}
+              filterGender={filterGender}
+              onFilterNameChange={onFilterNameChange}
+              onFilterGenderChange={onFilterGenderChange}
+            />
           </div>
         )}
 
@@ -95,6 +84,9 @@ class CharactersListPage extends React.Component {
 
 CharactersListPage.propTypes = {
   isLoading: PropTypes.bool,
+  pageIdx: PropTypes.number,
+  filterName: PropTypes.string.isRequired,
+  filterGender: PropTypes.string.isRequired,
   characters: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
@@ -119,6 +111,7 @@ CharactersListPage.propTypes = {
 
 CharactersListPage.defaultProps = {
   isLoading: false,
+  pageIdx: 0,
 };
 
 export default CharactersListPage;

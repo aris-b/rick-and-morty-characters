@@ -85,59 +85,9 @@
     cursor: default;
   }
 
-  .CharactersListPage_filter {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    padding: rem(30px 20px);
-    background-color: $color-4;
-    opacity: 0.95;
-  }
-
-  .CharactersListPage_filterFieldContainer {
-    width: rem(450px);
-    min-width: rem(200px);
-    margin: rem(10px);
-  }
-
-  .CharactersListPage_filterFieldTitle {
+  .CharactersListPage_noResults {
     color: $color-1;
     font-weight: bold;
-    font-size: rem(16px);
-    margin-bottom: rem(10px);
-  }
-
-  .CharactersListPage_filterField {
-    display: block;
-    box-sizing: border-box;
-    width: 100%;
-    border-radius: rem(4px);
-    border: rem(1px) solid $color-1;
-    padding: 10px 15px;
-    margin-bottom: 10px;
-    font-size: rem(16px);
-    margin: rem(0 20px);
-  }
-
-  .CharactersListPage_filterField___select {}
-
-  .CharactersListPage_filterField___select::-ms-expand {
-    display: none;
-  }
-  .CharactersListPage_filterField___select {
-    display: inline-block;
-    box-sizing: border-box;
-    padding: rem(11px 20px 11px 20px);
-    border: rem(1px) solid $color-1;
-    line-height: inherit;
-    appearance: none;
-    background-repeat: no-repeat;
-    background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
-    background-position: right rem(15px) top rem(10px), right rem(10px) top rem(10px);
-    background-size: rem(5px 5px), rem(5px 5px);
+    font-size: rem(32px);
   }
 }

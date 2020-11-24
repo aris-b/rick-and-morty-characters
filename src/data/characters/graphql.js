@@ -3,9 +3,11 @@ import { gql } from '@apollo/client';
 // TODO: remove it
 // filter: { name: "rick" }
 
-const getCharactersQuery = ({ page, filter }) => gql`
+const getCharactersQuery = ({ page, filter }) => {
+  console.log('filter:', filter);
+  return gql`
     query {
-      characters(page: ${page}, filter: ${filter}) {
+      characters(page: ${page}, filter: { name: "${filter.name}" }) {
         info {
           count
           pages
@@ -28,5 +30,6 @@ const getCharactersQuery = ({ page, filter }) => gql`
       }
     }
   `;
+};
 
 export default getCharactersQuery;
