@@ -20,15 +20,14 @@ class CharactersListPage extends React.Component {
 
   onFilterNameChange = (data) => {
     const { value } = data.target;
+    console.log('onFilterNameChange:', value);
     const { loadCharacters } = this.props;
-    // this.setState({ filterName: value });
     loadCharacters({ filterName: value });
   }
 
   onFilterGenderChange = (data) => {
     const { value } = data.target;
     const { loadCharacters } = this.props;
-    // this.setState({ filterGender: value });
     loadCharacters({ filterGender: value });
   }
 
@@ -46,7 +45,7 @@ class CharactersListPage extends React.Component {
           </div>
         )}
 
-        {!isLoading && (
+        {characters && (
           <div className="CharactersListPage_container">
             <CharactersList characters={characters} />
 
@@ -63,9 +62,11 @@ class CharactersListPage extends React.Component {
                 disabledClassName="CharactersListPage_paginationDisabled"
               />
             ) : (
-              <div className="CharactersListPage_noResults">
-                No result matching the criteria.
-              </div>
+              !isLoading && (
+                <div className="CharactersListPage_noResults">
+                  No result matching the criteria.
+                </div>
+              )
             )}
 
             <CharacterListFilter

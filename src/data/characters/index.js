@@ -96,10 +96,10 @@ const characters = {
 
       const request = client.query({
         query: getCharactersQuery({
-          page: ((pageIdx !== undefined) || pageIdxCurrent) + 1,
+          page: (pageIdx !== undefined ? pageIdx : pageIdxCurrent) + 1,
           filter: {
-            name: filterName || filterNameCurrent,
-            gender: filterGender || filterGenderCurrent,
+            name: filterName !== undefined ? filterName : filterNameCurrent,
+            gender: filterGender !== undefined ? filterGender : filterGenderCurrent,
           },
         }),
       });

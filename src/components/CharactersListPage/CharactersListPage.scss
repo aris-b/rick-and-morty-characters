@@ -19,7 +19,16 @@
   .CharactersListPage_loading {
     // height: 100%;
     // margin: auto auto;
+    position: fixed;
+    z-index: 100;
+    top: 45%;
     color: $color-1;
+    background-color: color.scale($color-4, $blackness: 10%);
+    opacity: 0.95;
+    border: 1px solid $color-4;
+    border-bottom: 3px solid $color-4;
+    box-shadow: rem(-10px 0px 13px -7px) $shadow-color, rem(10px 0px 13px -7px) $shadow-color, rem(5px 5px 15px 5px) rgba(0,0,0,0);
+    padding: rem(20px 80px);
     font-weight: bold;
     font-size: rem(32px);
     font-family: $font-family-1;

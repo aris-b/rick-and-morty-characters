@@ -11,6 +11,7 @@
   background-color: color.scale($color-2, $lightness: 60%);
   box-shadow: rem(-10px 0px 13px -7px) $shadow-color, rem(10px 0px 13px -7px) $shadow-color, rem(5px 5px 15px 5px) rgba(0,0,0,0);
   border: rem(1px) solid $color-4;
+  border-radius: rem(4px);
   border-bottom: rem(4px) solid $color-4;
 
   .Character_image {
