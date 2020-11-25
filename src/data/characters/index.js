@@ -9,6 +9,31 @@ const ERRORS_BY_RESPONSE_MSG = {
   '404: Not Found': ERROR_TYPES.NO_RESULTS,
 };
 
+const searchParamsInitial = new URLSearchParams(window.location.search);
+
+function updateHistory(params) {
+  const searchParams = new URLSearchParams(window.location.search);
+  // eslint-disable-next-line no-restricted-syntax
+  for (const param of params) {
+    const { name, value } = param;
+
+    searchParams.set(name, value);
+  }
+
+  const paramsObject = {};
+  // eslint-disable-next-line no-restricted-syntax
+  for (const [key, value] of searchParams.entries()) {
+    paramsObject[key] = value;
+  }
+
+  // eslint-disable-next-line no-restricted-globals
+  history.pushState(
+    { ...paramsObject },
+    null,
+    `?${searchParams.toString()}`,
+  );
+}
+
 const characters = {
   state: {
     isLoading: false,
@@ -17,9 +42,9 @@ const characters = {
       count: 0,
       pages: 1,
     },
-    page: 1,
-    filterName: '',
-    filterGender: '',
+    page: parseInt(searchParamsInitial.get('page'), 10) || 1,
+    filterName: searchParamsInitial.get('filterName') || '',
+    filterGender: searchParamsInitial.get('filterGender') || '',
     error: null,
   },
 
@@ -48,6 +73,11 @@ const characters = {
     },
     updatePage(state, payload) {
       const { page } = payload;
+
+      updateHistory([
+        { name: 'page', value: page },
+      ]);
+
       return {
         ...state,
         page,
@@ -55,6 +85,11 @@ const characters = {
     },
     updateFilterName(state, payload) {
       const { filterName } = payload;
+
+      updateHistory([
+        { name: 'filterName', value: filterName },
+      ]);
+
       return {
         ...state,
         filterName,
@@ -62,6 +97,11 @@ const characters = {
     },
     updateFilterGender(state, payload) {
       const { filterGender } = payload;
+
+      updateHistory([
+        { name: 'filterGender', value: filterGender },
+      ]);
+
       return {
         ...state,
         filterGender,

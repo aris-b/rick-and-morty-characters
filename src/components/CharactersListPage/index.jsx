@@ -15,7 +15,6 @@ class CharactersListPage extends React.Component {
   onPageChange = (data) => {
     const { loadCharacters } = this.props;
     const { selected } = data;
-    console.log('Page clicked:', selected);
     loadCharacters({ page: selected + 1 });
   }
 
@@ -36,7 +35,6 @@ class CharactersListPage extends React.Component {
       isLoading, characters, meta, page, filterName, filterGender,
     } = this.props;
     const { onPageChange, onFilterNameChange, onFilterGenderChange } = this;
-    console.log('Chars:', characters);
 
     return (
       <div className="CharactersListPage">
