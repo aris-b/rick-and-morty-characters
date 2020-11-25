@@ -36,6 +36,7 @@ class CharactersListPage extends React.Component {
       isLoading, characters, meta, page, filterName, filterGender,
     } = this.props;
     const { onPageChange, onFilterNameChange, onFilterGenderChange } = this;
+    console.log('Chars:', characters);
 
     return (
       <div className="CharactersListPage">

@@ -9,9 +9,7 @@ const statusToClass = {
 };
 
 const Character = ({
-  // TODO: clean up
-  // eslint-disable-next-line no-unused-vars
-  id, name, status, species, type, gender, origin, location, image,
+  name, status, species, type, gender, origin, location, image, episode,
 }) => (
   <div className="Character">
     <img className="Character_image" src={image} alt="Character" />
@@ -57,12 +55,22 @@ const Character = ({
             </div>
           </td>
         </tr>
-        {type && (
+        {!!type && (
           <tr>
             <td className="Character_propertiesGridColTitle">Type:</td>
             <td className="Character_propertiesGridColValue">
               <div className="Character_propertiesGridColValueText">
                 {type}
+              </div>
+            </td>
+          </tr>
+        )}
+        {!!episode.length && (
+          <tr>
+            <td className="Character_propertiesGridColTitle">First seen:</td>
+            <td className="Character_propertiesGridColValue">
+              <div className="Character_propertiesGridColValueText">
+                {episode[0].name}
               </div>
             </td>
           </tr>
@@ -73,7 +81,6 @@ const Character = ({
 );
 
 Character.propTypes = {
-  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
   species: PropTypes.string.isRequired,
@@ -86,6 +93,15 @@ Character.propTypes = {
     name: PropTypes.string,
   }).isRequired,
   image: PropTypes.string.isRequired,
+  episode: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+    }),
+  ),
+};
+
+Character.defaultProps = {
+  episode: [],
 };
 
 export default Character;

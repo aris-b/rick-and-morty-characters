@@ -11,15 +11,12 @@ class CharacterList extends React.Component {
 
   render() {
     const { characters } = this.props;
-    // const {} = this.state;
-    // const {} = this;
 
     return (
       <div className="CharacterList">
         {characters.map((character) => (
           <Character
             key={character.id}
-            id={character.id}
             name={character.name}
             status={character.status}
             species={character.species}
@@ -28,6 +25,7 @@ class CharacterList extends React.Component {
             origin={character.origin}
             location={character.location}
             image={character.image}
+            episode={character.episode}
           />
         ))}
       </div>

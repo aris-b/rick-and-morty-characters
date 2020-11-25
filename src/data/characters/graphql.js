@@ -21,6 +21,9 @@ const getCharactersQuery = () => gql`
             name
           }
           image
+          episode {
+            name
+          }
         }
       }
     }

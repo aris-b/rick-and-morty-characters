@@ -69,10 +69,8 @@ const characters = {
     },
     updateError(state, payload) {
       const { error } = payload;
-      console.log('error:', error);
       let errorType = error;
       if (error && error.graphQLErrors) {
-        console.log('error.graphQLErrors:', error.graphQLErrors);
         errorType = ERRORS_BY_RESPONSE_MSG[error.graphQLErrors[0].message];
       }
       return {
@@ -86,7 +84,6 @@ const characters = {
     // handle state changes with impure functions.
     // use async/await for async actions
     async loadCharacters(payload, rootState) {
-      console.log('loadCharacters:', payload);
       const { page, filterName, filterGender } = payload || {};
       const {
         page: pageCurrent,
@@ -125,7 +122,6 @@ const characters = {
           meta: response.data.characters.info,
         });
       } catch (error) {
-        console.log('Error during a Characters API request!', error);
         if (error.graphQLErrors) {
           const errorType = ERRORS_BY_RESPONSE_MSG[error.graphQLErrors[0].message];
           if (errorType === ERROR_TYPES.NO_RESULTS) {
