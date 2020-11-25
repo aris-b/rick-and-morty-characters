@@ -46,8 +46,11 @@ const CharacterListFilter = ({
         <option value="female">
           Female
         </option>
-        <option value="other">
-          Other
+        <option value="genderless">
+          Genderless
+        </option>
+        <option value="unknown">
+          Unknown
         </option>
       </select>
     </label>
