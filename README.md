@@ -2,7 +2,7 @@
 A simple web app for exploring Rich and Morty characters.
 Built with React, Redux and GraphQL API.
 
-[Demo](https://rick-and-morty-characters-six.vercel.app)
+[Demo](https://rick-and-morty-characters-ten.vercel.app)
 
 ### React
 The UI of the app is created with React using [Create React App](https://create-react-app.dev).
