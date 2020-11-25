@@ -1,11 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import debounce from 'lodash/debounce';
 import CharactersList from 'components/CharacterList';
 import ReactPaginate from 'react-paginate';
 import CharacterListFilter from 'components/CharactersListFilter';
 import './CharactersListPage.scss';
 
 class CharactersListPage extends React.Component {
+  processFilterNameChange = debounce(
+    (value) => {
+      const { loadCharacters } = this.props;
+      loadCharacters({ page: 1, filterName: value });
+    },
+    500,
+  )
+
   componentDidMount() {
     const { loadCharacters } = this.props;
     const { page } = this.props;
@@ -20,7 +29,10 @@ class CharactersListPage extends React.Component {
 
   onFilterNameChange = (data) => {
     const { value } = data.target;
-    const { loadCharacters } = this.props;
+    const { loadCharacters, updateFilterName } = this.props;
+    const { processFilterNameChange } = this;
+    updateFilterName({ filterName: value });
+    processFilterNameChange(value);
     loadCharacters({ page: 1, filterName: value });
   }
 
@@ -106,6 +118,7 @@ CharactersListPage.propTypes = {
     count: PropTypes.number,
     pages: PropTypes.number,
   }).isRequired,
+  updateFilterName: PropTypes.func.isRequired,
   loadCharacters: PropTypes.func.isRequired,
 };
 

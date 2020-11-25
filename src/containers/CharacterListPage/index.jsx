@@ -16,6 +16,7 @@ const CharacterListPageContainer = connect(
   (dispatch) => {
     const { characters } = dispatch;
     return {
+      updateFilterName: characters.updateFilterName,
       loadCharacters: characters.loadCharacters,
     };
   },
