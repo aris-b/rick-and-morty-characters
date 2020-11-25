@@ -17,9 +17,9 @@ const characters = {
       count: 0,
       pages: 1,
     },
-    pageIdx: 0,
+    page: 1,
     filterName: '',
-    filterGender: 'any',
+    filterGender: '',
     error: null,
   },
 
@@ -46,11 +46,11 @@ const characters = {
         meta,
       };
     },
-    updatePageIdx(state, payload) {
-      const { pageIdx } = payload;
+    updatePage(state, payload) {
+      const { page } = payload;
       return {
         ...state,
-        pageIdx,
+        page,
       };
     },
     updateFilterName(state, payload) {
@@ -87,21 +87,24 @@ const characters = {
     // use async/await for async actions
     async loadCharacters(payload, rootState) {
       console.log('loadCharacters:', payload);
-      const { pageIdx, filterName, filterGender } = payload || {};
+      const { page, filterName, filterGender } = payload || {};
       const {
-        pageIdx: pageIdxCurrent,
+        page: pageCurrent,
         filterName: filterNameCurrent,
         filterGender: filterGenderCurrent,
       } = rootState.characters;
 
+      const filterNameProcessed = filterName !== undefined ? filterName : filterNameCurrent;
+      const filterGenderProcessed = filterGender !== undefined ? filterGender : filterGenderCurrent;
+      const pageProcessed = page !== undefined ? page : pageCurrent;
+
       const request = client.query({
-        query: getCharactersQuery({
-          page: (pageIdx !== undefined ? pageIdx : pageIdxCurrent) + 1,
-          filter: {
-            name: filterName !== undefined ? filterName : filterNameCurrent,
-            gender: filterGender !== undefined ? filterGender : filterGenderCurrent,
-          },
-        }),
+        query: getCharactersQuery(),
+        variables: {
+          page: pageProcessed,
+          filterName: filterNameProcessed,
+          filterGender: filterGenderProcessed,
+        },
       });
 
       dispatch.characters.updateIsLoading({
@@ -122,6 +125,7 @@ const characters = {
           meta: response.data.characters.info,
         });
       } catch (error) {
+        console.log('Error during a Characters API request!', error);
         if (error.graphQLErrors) {
           const errorType = ERRORS_BY_RESPONSE_MSG[error.graphQLErrors[0].message];
           if (errorType === ERROR_TYPES.NO_RESULTS) {
@@ -141,9 +145,9 @@ const characters = {
           error,
         });
       } finally {
-        if (pageIdx !== undefined) {
-          dispatch.characters.updatePageIdx({
-            pageIdx,
+        if (page !== undefined) {
+          dispatch.characters.updatePage({
+            page,
           });
         }
         if (filterName !== undefined) {

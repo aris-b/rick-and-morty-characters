@@ -37,7 +37,7 @@ const CharacterListFilter = ({
         value={filterGender}
         onChange={onFilterGenderChange}
       >
-        <option value="any">
+        <option value="">
           Any
         </option>
         <option value="male">

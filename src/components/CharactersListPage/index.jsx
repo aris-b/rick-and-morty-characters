@@ -8,32 +8,32 @@ import './CharactersListPage.scss';
 class CharactersListPage extends React.Component {
   componentDidMount() {
     const { loadCharacters } = this.props;
-    const { pageIdx } = this.props;
-    loadCharacters({ pageIdx });
+    const { page } = this.props;
+    loadCharacters({ page });
   }
 
   onPageChange = (data) => {
     const { loadCharacters } = this.props;
     const { selected } = data;
-    loadCharacters({ pageIdx: selected + 1 });
+    console.log('Page clicked:', selected);
+    loadCharacters({ page: selected + 1 });
   }
 
   onFilterNameChange = (data) => {
     const { value } = data.target;
-    console.log('onFilterNameChange:', value);
     const { loadCharacters } = this.props;
-    loadCharacters({ filterName: value });
+    loadCharacters({ page: 1, filterName: value });
   }
 
   onFilterGenderChange = (data) => {
     const { value } = data.target;
     const { loadCharacters } = this.props;
-    loadCharacters({ filterGender: value });
+    loadCharacters({ page: 1, filterGender: value });
   }
 
   render() {
     const {
-      isLoading, characters, meta, pageIdx, filterName, filterGender,
+      isLoading, characters, meta, page, filterName, filterGender,
     } = this.props;
     const { onPageChange, onFilterNameChange, onFilterGenderChange } = this;
 
@@ -41,7 +41,7 @@ class CharactersListPage extends React.Component {
       <div className="CharactersListPage">
         {isLoading && (
           <div className="CharactersListPage_loading">
-            Loading...
+            Loading ...
           </div>
         )}
 
@@ -51,8 +51,8 @@ class CharactersListPage extends React.Component {
 
             {meta.count ? (
               <ReactPaginate
-                pageCount={meta.count}
-                forcePage={pageIdx}
+                pageCount={meta.pages}
+                forcePage={page - 1}
                 onPageChange={onPageChange}
                 previousLabel="<"
                 nextLabel=">"
@@ -85,7 +85,7 @@ class CharactersListPage extends React.Component {
 
 CharactersListPage.propTypes = {
   isLoading: PropTypes.bool,
-  pageIdx: PropTypes.number,
+  page: PropTypes.number,
   filterName: PropTypes.string.isRequired,
   filterGender: PropTypes.string.isRequired,
   characters: PropTypes.arrayOf(PropTypes.shape({
@@ -112,7 +112,7 @@ CharactersListPage.propTypes = {
 
 CharactersListPage.defaultProps = {
   isLoading: false,
-  pageIdx: 0,
+  page: 1,
 };
 
 export default CharactersListPage;
